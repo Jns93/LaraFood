@@ -1,8 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Client;
 
+Route::get('teste', function() {
+    $client = Client::first();
 
+    $token = $client->createToken('token-teste');
+
+    dd($token->plainTextToken);
+});
 
 Route::prefix('admin')
         ->namespace('Admin')
@@ -21,7 +28,7 @@ Route::prefix('admin')
     Route::any('users/{id}/roles/create', 'ACL\RoleUserController@rolesAvailable')->name('users.roles.available');
     Route::get('users/{id}/roles', 'ACL\RoleUserController@roles')->name('users.roles');
     Route::get('roles/{id}/users', 'ACL\RoleUserController@users')->name('roles.users');
-    
+
     /**
      * Permission x Role
      */

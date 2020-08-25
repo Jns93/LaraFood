@@ -28,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        if ($this->app->runningInConsole()) return;
+
         $permissions = Permission::all();
 
         foreach ($permissions as $permission) {
@@ -42,7 +44,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::before(function (User $user) {
             //Quem passar nesse gate não passara pelas outras validações
-            
+
             if ($user->isAdmin()) {
                 return true;
             }
